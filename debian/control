@@ -1,0 +1,28 @@
+Source: swift-bench
+Section: net
+Priority: optional
+Maintainer: PKG OpenStack <openstack-devel@lists.alioth.debian.org>
+Uploaders: Ondřej Nový <novy@ondrej.org>,
+           Thomas Goirand <zigo@debian.org>,
+Build-Depends: debhelper (>= 9),
+               openstack-pkg-tools,
+               python-all,
+Build-Depends-Indep: python-eventlet,
+                     python-mock,
+                     python-setuptools,
+                     python-sphinx,
+Standards-Version: 3.9.6
+Homepage: https://github.com/openstack/swift-bench
+Vcs-Browser: https://github.com/openstack/swift-bench
+Vcs-Git: https://github.com/openstack/swift-bench
+
+Package: swift-bench
+Architecture: all
+Depends: python-eventlet,
+         python-swift,
+         python-swiftclient,
+         ${misc:Depends},
+         ${python:Depends},
+Provides: ${python:Provides},
+Description: benchmarking tool for Swift
+ Swift Bench is simple tool for benchmarking OpenStack Swift cluster

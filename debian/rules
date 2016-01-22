@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+include /usr/share/openstack-pkg-tools/pkgos.make
+
+%:
+	dh $@ --buildsystem=python_distutils --with python2
+
+override_dh_install:
+	dh_install --fail-missing
+	rm -rf debian/swift-bench/usr/lib/python*/dist-packages/tests
+
+override_dh_clean:
+	dh_clean
+	rm -rf swift_bench.egg-info
+	rm -rf .testrepository
+
+override_dh_auto_test:
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+	PYTHONPATH=. python setup.py testr
+endif
+
