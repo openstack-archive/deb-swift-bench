@@ -11,7 +11,6 @@ override_dh_install:
 
 override_dh_clean:
 	dh_clean
-	rm -rf swift_bench.egg-info
 	rm -rf .testrepository
 
 override_dh_auto_test:
