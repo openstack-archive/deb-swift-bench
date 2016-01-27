@@ -29,3 +29,13 @@ Depends: python-eventlet,
 Provides: ${python:Provides},
 Description: benchmarking tool for Swift
  Swift Bench is simple tool for benchmarking OpenStack Swift cluster
+ .
+ OpenStack Object Storage (code-named Swift) creates redundant, scalable object
+ storage using clusters of standardized servers to store petabytes of
+ accessible data. It is not a file system or real-time data storage system, but
+ rather a long-term storage system for a more permanent type of static data
+ that can be retrieved, leveraged, and then updated if necessary. Primary
+ examples of data that best fit this type of storage model are virtual machine
+ images, photo storage, email storage and backup archiving. Having no central
+ "brain" or master point of control provides greater scalability, redundancy
+ and permanence.
