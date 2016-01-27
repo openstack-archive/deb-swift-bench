@@ -9,6 +9,8 @@ override_dh_install:
 	dh_install --fail-missing
 	rm -rf debian/swift-bench/usr/lib/python*/dist-packages/tests
 
+	install -D -m 0644 $(CURDIR)/etc/swift-bench.conf-sample			$(CURDIR)/debian/swift-bench/etc/swift/swift-bench.conf
+
 override_dh_clean:
 	dh_clean
 	rm -rf .testrepository
