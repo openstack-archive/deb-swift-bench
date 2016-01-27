@@ -7,10 +7,13 @@ Uploaders: Ondřej Nový <novy@ondrej.org>,
 Build-Depends: debhelper (>= 9),
                openstack-pkg-tools,
                python-all,
+               python-setuptools,
+               python-sphinx,
 Build-Depends-Indep: python-eventlet,
                      python-mock,
-                     python-setuptools,
-                     python-sphinx,
+                     python-testrepository (>= 0.0.17),
+                     python-testtools (>= 0.9.32),
+                     subunit,
 Standards-Version: 3.9.6
 Homepage: https://github.com/openstack/swift-bench
 Vcs-Browser: https://anonscm.debian.org/cgit/openstack/swift-bench.git
