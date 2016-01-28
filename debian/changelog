@@ -1,4 +1,4 @@
-swift-bench (1.0-1) UNRELEASED; urgency=medium
+swift-bench (1.0-1) unstable; urgency=medium
 
   * Initial release. (Closes: #812367)
 
