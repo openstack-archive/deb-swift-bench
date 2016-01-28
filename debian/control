@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 9),
                python-sphinx,
 Build-Depends-Indep: python-eventlet,
                      python-mock,
-                     python-testtools (>= 0.9.32),
+                     python-testtools,
                      subunit,
                      testrepository,
 Standards-Version: 3.9.6
