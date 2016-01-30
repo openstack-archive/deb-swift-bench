@@ -1,6 +1,6 @@
 swift-bench (1.0-2) UNRELEASED; urgency=medium
 
-  * Added debian tests.
+  * Added Debian tests.
 
  -- Ondřej Nový <novy@ondrej.org>  Sat, 30 Jan 2016 19:23:59 +0100
 
