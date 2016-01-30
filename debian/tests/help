@@ -1,0 +1,17 @@
+#!/bin/bash
+#-----------------------
+# Testing utilities help
+#-----------------------
+set -e
+
+CMDS=('swift-bench')
+for cmd in "${CMDS[@]}"; do
+    if ! $cmd -h 2>&1 > /dev/null; then
+        echo "ERROR, ${cmd} is not running"
+        exit 1
+    else
+        echo "OK: ${cmd} is running"
+    fi
+done
+
+exit 0
