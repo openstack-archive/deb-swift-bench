@@ -1,4 +1,4 @@
-swift-bench (1.2.0-2) UNRELEASED; urgency=medium
+swift-bench (1.2.0-1) UNRELEASED; urgency=medium
 
   * New upstream release.
   * Added Debian tests.
