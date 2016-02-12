@@ -18,7 +18,6 @@ Standards-Version: 3.9.7
 Homepage: https://github.com/openstack/swift-bench
 Vcs-Browser: https://anonscm.debian.org/cgit/openstack/swift-bench.git
 Vcs-Git: https://anonscm.debian.org/git/openstack/swift-bench.git
-XS-Testsuite: autopkgtest
 
 Package: swift-bench
 Architecture: all
