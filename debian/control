@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 9),
                python-all,
                python-setuptools,
                python-sphinx,
-Build-Depends-Indep: python-eventlet,
+Build-Depends-Indep: python-eventlet (>= 0.17.4),
                      python-mock,
                      python-testtools,
                      subunit,
@@ -21,7 +21,7 @@ Vcs-Git: https://anonscm.debian.org/git/openstack/swift-bench.git
 
 Package: swift-bench
 Architecture: all
-Depends: python-eventlet,
+Depends: python-eventlet (>= 0.17.4),
          python-swift,
          python-swiftclient,
          ${misc:Depends},
