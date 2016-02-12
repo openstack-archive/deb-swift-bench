@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import re
 import sys
 import uuid
@@ -22,7 +23,6 @@ import signal
 import socket
 import logging
 from contextlib import contextmanager
-from swift import gettext_ as _
 from optparse import Values
 
 import eventlet
@@ -31,12 +31,8 @@ from eventlet.green.httplib import CannotSendRequest
 
 import swiftclient as client
 
-from swiftbench.utils import config_true_value
+from swiftbench.utils import config_true_value, using_http_proxy
 
-try:
-    import simplejson as json
-except ImportError:
-    import json
 
 try:
     from swift.common import direct_client
@@ -46,13 +42,13 @@ except ImportError:
 HTTP_CONFLICT = 409
 
 
-def _func_on_containers(logger, conf, concurrency_key, func):
+def _func_on_containers(logger, conf, concurrency_key, func, **kwargs):
     """Run a function on each container with concurrency."""
 
     bench = Bench(logger, conf, [])
     pool = eventlet.GreenPool(int(getattr(conf, concurrency_key)))
     for container in conf.containers:
-        pool.spawn_n(func, bench.url, bench.token, container)
+        pool.spawn_n(func, bench.url, bench.token, container, **kwargs)
     pool.waitall()
 
 
@@ -74,7 +70,15 @@ def delete_containers(logger, conf):
 def create_containers(logger, conf):
     """Utility function to create benchmark containers."""
 
-    _func_on_containers(logger, conf, 'put_concurrency', client.put_container)
+    if conf.policy_name:
+        logger.info("Creating containers with storage policy: %s" %
+                    conf.policy_name)
+        _func_on_containers(logger, conf, 'put_concurrency',
+                            client.put_container,
+                            headers={'X-Storage-Policy': conf.policy_name})
+    else:
+        _func_on_containers(logger, conf, 'put_concurrency',
+                            client.put_container)
 
 
 class SourceFile(object):
@@ -102,8 +106,8 @@ class SourceFile(object):
         if self.pos >= self.size:
             raise StopIteration
         chunk_size = min(self.size - self.pos, self.chunk_size)
-        yield '0' * chunk_size
         self.pos += chunk_size
+        return '0' * chunk_size
 
     def read(self, desired_size):
         chunk_size = min(self.size - self.pos, desired_size)
@@ -192,6 +196,9 @@ class Bench(object):
         self.auth_version = conf.auth_version
         self.logger.info("Auth version: %s" % self.auth_version)
         if self.use_proxy:
+            if using_http_proxy(self.auth_url):
+                logger.warn("Auth is going through HTTP proxy server. This "
+                            "could affect test result")
             url, token = client.get_auth(self.auth_url, self.user, self.key,
                                          auth_version=self.auth_version)
             self.token = token
@@ -205,6 +212,10 @@ class Bench(object):
             self.account = conf.account
             self.url = conf.url
             self.ip, self.port = self.url.split('/')[2].split(':')
+
+        if using_http_proxy(self.url):
+            logger.warn("Communication with Swift server is going through "
+                        "HTTP proxy server. This could affect test result")
 
         self.object_size = int(conf.object_size)
         self.object_sources = conf.object_sources
@@ -230,11 +241,11 @@ class Bench(object):
 
     def _log_status(self, title):
         total = time.time() - self.beginbeat
-        self.logger.info(_('%(complete)s %(title)s [%(fail)s failures], '
-                           '%(rate).01f/s'),
-                         {'title': title, 'complete': self.complete,
-                          'fail': self.failures,
-                          'rate': (float(self.complete) / total)})
+        self.logger.info(
+            '%(complete)s %(title)s [%(fail)s failures], %(rate).01f/s',
+            {'title': title, 'complete': self.complete,
+             'fail': self.failures,
+             'rate': (float(self.complete) / total)})
 
     @contextmanager
     def connection(self):
@@ -243,7 +254,7 @@ class Bench(object):
             try:
                 yield hc
             except CannotSendRequest:
-                self.logger.info(_("CannotSendRequest.  Skipping..."))
+                self.logger.info("CannotSendRequest.  Skipping...")
                 try:
                     hc.close()
                 except Exception:
@@ -316,8 +327,8 @@ class DistributedBenchController(object):
         eventlet.patcher.monkey_patch(socket=True)
         pool = eventlet.GreenPool(size=len(self.clients))
         pile = eventlet.GreenPile(pool)
-        for client in self.clients:
-            pile.spawn(self.do_run, client)
+        for c in self.clients:
+            pile.spawn(self.do_run, c)
         results = {
             'PUTS': dict(count=0, failures=0, rate=0.0),
             'GETS': dict(count=0, failures=0, rate=0.0),

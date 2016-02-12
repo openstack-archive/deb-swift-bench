@@ -74,6 +74,7 @@ if __name__ == '__main__':
     num_gets = 10000
     delete = yes
     auth_version = 1.0
+    policy_name = gold
     """
     parser = OptionParser(usage=usage)
     parser.add_option('', '--saio', dest='saio', action='store_true',
@@ -120,6 +121,9 @@ if __name__ == '__main__':
                       help='Authentication version')
     parser.add_option('-d', '--delay', dest='delay',
                       help='Delay before delete requests in seconds')
+    parser.add_option('-P', '--policy-name', dest='policy_name',
+                      help='Specify which policy to use when creating '
+                           'containers')
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -144,6 +148,7 @@ if __name__ == '__main__':
         conf = CONF_DEFAULTS
     parser.set_defaults(**conf)
     options, _junk = parser.parse_args()
+
     if options.concurrency is not '':
         options.put_concurrency = options.concurrency
         options.get_concurrency = options.concurrency
@@ -151,11 +156,9 @@ if __name__ == '__main__':
     options.containers = ['%s_%d' % (options.container_name, i)
                           for i in xrange(int(options.num_containers))]
 
-    # Normalize boolean option to a config parameter value
-    if config_true_value(str(options.delete).lower()):
-        options.delete = 'yes'
-    else:
-        options.delete = 'no'
+    # Turn "yes"/"no"/etc. strings to booleans
+    options.use_proxy = config_true_value(options.use_proxy)
+    options.delete = config_true_value(options.delete)
 
     def sigterm(signum, frame):
         sys.exit('Termination signal received.')
@@ -184,5 +187,5 @@ if __name__ == '__main__':
     controller = controller_class(logger, options)
     controller.run()
 
-    if options.use_proxy and options.delete == 'yes':
+    if options.use_proxy and options.delete:
         delete_containers(logger, options)
