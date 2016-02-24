@@ -1,4 +1,4 @@
-swift-bench (1.2.0-1) UNRELEASED; urgency=medium
+swift-bench (1.2.0-1) unstable; urgency=medium
 
   * New upstream release.
   * Added Debian tests.
@@ -6,7 +6,7 @@ swift-bench (1.2.0-1) UNRELEASED; urgency=medium
   * Added dh-python build dependency.
   * Added python-hacking build dependency.
 
- -- Ondřej Nový <novy@ondrej.org>  Sat, 30 Jan 2016 19:23:59 +0100
+ -- Ondřej Nový <novy@ondrej.org>  Wed, 24 Feb 2016 10:25:40 +0100
 
 swift-bench (1.0-1) unstable; urgency=medium
 
