@@ -3,6 +3,7 @@ swift-bench (1.2.0-2) unstable; urgency=medium
   * Fixed hardcoded Python 2.7 version when running unit tests
   * Standards-Version is 3.9.8 now (no change)
   * d/copyright: Fixed wrong Upstream-Name and Source
+  * Change directory to $ADTTMP before running Debian tests
 
  -- Ondřej Nový <novy@ondrej.org>  Thu, 02 Jun 2016 16:39:24 +0200
 

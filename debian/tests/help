@@ -4,6 +4,8 @@
 #-----------------------
 set -e
 
+cd "$ADTTMP"
+
 CMDS=('swift-bench')
 for cmd in "${CMDS[@]}"; do
     if ! $cmd -h 2>&1 > /dev/null; then
