@@ -1,0 +1,9 @@
+Code-Review+1: Kazuhiro MIYAHARA <miyahara.kazuhiro@lab.ntt.co.jp>
+Code-Review+2: John Dickinson <me@not.mn>
+Workflow+1: John Dickinson <me@not.mn>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 12 Sep 2016 04:45:00 +0000
+Reviewed-on: https://review.openstack.org/264486
+Project: openstack/deb-swift-bench
+Branch: refs/heads/master
