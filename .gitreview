@@ -1,4 +1,5 @@
 [gerrit]
 host=review.openstack.org
 port=29418
-project=openstack/swift-bench.git
+project=openstack/deb-swift-bench.git
+defaultbranch=debian/newton
