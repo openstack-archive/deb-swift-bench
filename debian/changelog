@@ -3,6 +3,7 @@ swift-bench (1.2.0-3) UNRELEASED; urgency=medium
   * d/{control,copyright}: Use my @debian.org email address
   * d/s/options: extend-diff-ignore of .gitreview
   * d/control: Using OpenStack's Gerrit as VCS URLs.
+  * Bumped debhelper version to 10
 
  -- Ondřej Nový <onovy@debian.org>  Mon, 20 Jun 2016 20:16:06 +0200
 
