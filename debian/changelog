@@ -1,3 +1,9 @@
+swift-bench (1.2.0-2~bpo8+1) jessie-backports; urgency=medium
+
+  * Rebuild for jessie-backports.
+
+ -- Ondřej Nový <onovy@debian.org>  Tue, 21 Feb 2017 13:42:08 +0100
+
 swift-bench (1.2.0-2) unstable; urgency=medium
 
   * Fixed hardcoded Python 2.7 version when running unit tests
